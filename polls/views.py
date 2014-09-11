@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render
 from django.core.urlresolvers import reverse
 
 #from django.template import RequestContext, loader
-from polls.models import Question
+from polls.models import Question, Choice
 
 # Create your views here.
 
@@ -36,7 +36,7 @@ def results(request, question_id):
     return render(request, 'polls/results.html', {'question':question})
 def vote(request,question_id):
     p = get_object_or_404(Question, pk = question_id)
-    """try:
+    try:
         selected_choice = p.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist): 
         return render(request, 'polls/detail.html', {
@@ -45,8 +45,8 @@ def vote(request,question_id):
                 })
     else:
         selected_choice.votes += 1
-        selected_choice.save()"""
-    #return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
-    return render(request, 'polls/results.html', {'question':p})
+        selected_choice.save()
+    return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+    #return render(request, 'polls/results.html', {'question':p})
 
 
